@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # run
-uwsgi --ini uwsgi.ini
+python manage.py runserver

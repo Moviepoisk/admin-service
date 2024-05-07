@@ -81,6 +81,9 @@ class PostgresSaver:
         # В зависимости от количества колонок генерируем под них %s.
         col_count = ", ".join(["%s"] * len(column_names))  # '%s, %s
         with connection.cursor() as cursor:
+            query = ("CREATE SCHEMA IF NOT EXISTS content;")
+            cursor.execute(query)
+            connection.commit()
             data = list(astuple(row) for row in items)
             args = ",".join(
                 cursor.mogrify(f"({col_count})", item).decode("utf-8") for item in data
@@ -176,7 +179,7 @@ class Command(BaseCommand):
         DATABASE_PASSWORD = os.getenv("DB_PASSWORD")
         DATABASE_HOST = os.getenv("DB_HOST")
         DATABASE_PORT = os.getenv("DB_PORT")
-        
+
         dsl = {
             "dbname": DATABASE_NAME,
             "user": DATABASE_USER,
@@ -187,7 +190,7 @@ class Command(BaseCommand):
 
         print(dsl)
         print('go-go')
-        
+
         with conn_context("db.sqlite") as sqlite_conn:
             # Используем contextlib.closing для управления psycopg2.connect
             with closing(psycopg2.connect(**dsl, cursor_factory=DictCursor)) as pg_conn:

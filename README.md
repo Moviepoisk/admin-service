@@ -12,32 +12,23 @@ cd app
 ```
 
 ### Запуск Postgres
+из репозитория infra
 ```
-docker run -d \
-  --name postgres \
-  -p 5432:5432 \
-  -v $HOME/postgresql/data:/var/lib/postgresql/data \
-  -e POSTGRES_PASSWORD=123qwe \
-  -e POSTGRES_USER=app \
-  -e POSTGRES_DB=movies_database  \
-  postgres:16
+docker compose up -d postgres
 ```
 
-применить ddl файл для создания начальных схем и таблиц
-```
+применить sql в БД из файла movies_database.ddl
 
-psql -h 127.0.0.1 -U app -d movies_database -f movies_database.ddl
-```
+создать все таблицы
 
-подключиться
 ```
-psql -h 127.0.0.1 -U app -d movies_database
-```
-
-создать все служебные таблицы
-
 python manage.py migrate
+python manage.py seed_data
+python manage.py createsuperuser
+```
 
+
+------
 ## Заполнение тестовыми данными
 
 python manage.py seed_data
