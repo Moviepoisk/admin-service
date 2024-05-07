@@ -10,6 +10,7 @@ on:
 env:
   REGISTRY_IMAGE: arigatory/moviepoisk-admin
   DOCKERFILE: Dockerfile
+  DEPLOYMENT_NAME: admin-svc
 
 jobs:
   build:
@@ -29,6 +30,14 @@ jobs:
           file: ${{ env.DOCKERFILE }}
           push: true
           tags: ${{ env.REGISTRY_IMAGE }}:latest
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Save kubernetes config
+        run: doctl kubernetes cluster kubeconfig save dc7d55fc-c398-4cfd-9b39-f796bcc278ed
+      - name: Restart kubernetes deployment
+        run: kubectl rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
 
 
 
