@@ -16,6 +16,7 @@ ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
 
+RUN apt-get update && apt-get install -y curl nano netstat iputils-ping bash
 
 # Copy poetry.lock* in case it doesn't exist in the repo
 COPY requirements.txt requirements.txt
