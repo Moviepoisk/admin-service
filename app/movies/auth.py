@@ -20,6 +20,7 @@ class CustomBackend(BaseBackend):
         url = settings.AUTH_API_LOGIN_URL
 
         headers = {
+            'User-Agent': 'My User Agent 1.0',
             'accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
         }
@@ -46,6 +47,7 @@ class CustomBackend(BaseBackend):
         data = response.json()
 
         headers = {
+            'User-Agent': 'My User Agent 1.0',
             'accept': 'application/json',
             'Authorization': f'Bearer {data.get('access_token')}',
             'Content-Type': 'application/x-www-form-urlencoded',
