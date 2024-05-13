@@ -31,11 +31,16 @@ class User(AbstractBaseUser):
         verbose_name='email address', max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    username = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
     # строка с именем поля модели, которая используется в качестве уникального идентификатора
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
+
+    @property
+    def is_staff(self):
+        return self.is_admin
 
     # менеджер модели
     objects = MyUserManager()

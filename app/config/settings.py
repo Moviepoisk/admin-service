@@ -83,6 +83,8 @@ include(
 
 
 AUTHENTICATION_BACKENDS = [
-    # 'movies.auth.CustomBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    'movies.auth.CustomBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
 ]
+
+AUTH_API_LOGIN_URL = "http://auth.moviepoisk.ru/api/v1/tokens"
