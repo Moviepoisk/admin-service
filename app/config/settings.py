@@ -91,3 +91,23 @@ AUTH_API = "http://auth-clusterip:8000"
 AUTH_API_LOGIN_URL = f"{AUTH_API}/api/v1/tokens"
 AUTH_API_ME_URL = f"{AUTH_API}/api/v1/me"
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
