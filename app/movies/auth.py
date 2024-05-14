@@ -36,11 +36,11 @@ class CustomBackend(BaseBackend):
 
         response = requests.post(url, headers=headers, data=data)
 
-        print(response)
-        print(response.content)
-        print(response.status_code)
+        print('response: ', response)
+        print("response.content", response.content)
+        print("response.status_code", response.status_code)
         data = response.json()
-        print(data)
+        print('data', data)
         if response.status_code != http.HTTPStatus.OK:
             return None
 
@@ -61,6 +61,10 @@ class CustomBackend(BaseBackend):
             return None
 
         data = response.json()
+        
+        print('response 2: ', response)
+        print("response.content 2", response.content)
+        print("response.status_code 2", response.status_code)
 
         try:
             user, created = User.objects.get_or_create(id=data['id'],)
