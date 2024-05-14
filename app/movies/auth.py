@@ -67,6 +67,7 @@ class CustomBackend(BaseBackend):
         print('response 2: ', response)
         print("response.content 2", response.content)
         print("response.status_code 2", response.status_code)
+        print("data 2", data)
 
         try:
             user, created = User.objects.get_or_create(id=data['id'])
@@ -77,7 +78,9 @@ class CustomBackend(BaseBackend):
             user.is_admin = True  # data.get('role') == Roles.ADMIN
             user.is_active = True  # data.get('is_active')
             user.save()
-        except Exception:
+            print(f"User created or updated: {user}")
+        except Exception as e:
+            print(f"Exception occurred: {e}")
             return None
 
         return user
