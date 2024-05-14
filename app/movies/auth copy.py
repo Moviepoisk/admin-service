@@ -39,25 +39,23 @@ class CustomBackend(BaseBackend):
         print('response: ', response)
         print("response.content", response.content)
         print("response.status_code", response.status_code)
-
+        data = response.json()
+        print('data', data)
         if response.status_code != http.HTTPStatus.OK:
             return None
 
         data = response.json()
-        print('data', data)
-
-        if 'access_token' not in data:
-            return None
 
         headers = {
             'User-Agent': 'My User Agent 1.0',
             'accept': 'application/json',
-            'Authorization': f"Bearer {data.get('access_token')}",
+            'Authorization': f'Bearer {data.get('access_token')}',
             'Content-Type': 'application/x-www-form-urlencoded',
         }
 
         url = settings.AUTH_API_ME_URL
-        response = requests.post(url, headers=headers)
+        response = requests.post(
+            url, headers=headers)
 
         if response.status_code != http.HTTPStatus.OK:
             return None
@@ -69,7 +67,7 @@ class CustomBackend(BaseBackend):
         print("response.status_code 2", response.status_code)
 
         try:
-            user, created = User.objects.get_or_create(id=data['id'])
+            user, created = User.objects.get_or_create(id=data['id'],)
             user.email = data.get('email')
             user.login = data.get('login')
             user.first_name = data.get('first_name')
