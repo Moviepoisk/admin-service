@@ -89,7 +89,7 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_API = "http://auth-clusterip:8000"
 AUTH_API_LOGIN_URL = f"{AUTH_API}/api/v1/tokens"
-AUTH_API_ME_URL = f"{AUTH_API}api/v1/user/me"
+AUTH_API_ME_URL = f"{AUTH_API}/api/v1/user/me"
 
 # LOGGING = {
 #     'version': 1,
