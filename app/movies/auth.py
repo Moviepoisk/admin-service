@@ -53,8 +53,9 @@ class CustomBackend(BaseBackend):
             'Content-Type': 'application/x-www-form-urlencoded',
         }
 
+        url = settings.AUTH_API_ME_URL
         response = requests.post(
-            'http://auth.moviepoisk.ru/api/v1/user/me', headers=headers)
+            url, headers=headers)
 
         if response.status_code != http.HTTPStatus.OK:
             return None
