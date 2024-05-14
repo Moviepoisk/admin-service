@@ -89,6 +89,6 @@ AUTHENTICATION_BACKENDS = [
 
 #AUTH_API_LOGIN_URL = "http://auth.moviepoisk.ru/api/v1/tokens"
 AUTH_API = "auth-clusterip.default.svc.cluster.local"
-AUTH_API_LOGIN_URL = "{AUTH_API}/api/v1/tokens"
-AUTH_API_ME_URL = "{AUTH_API}/api/v1/me"
+AUTH_API_LOGIN_URL = f"{AUTH_API}/api/v1/tokens"
+AUTH_API_ME_URL = f"{AUTH_API}/api/v1/me"
 
