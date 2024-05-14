@@ -49,6 +49,9 @@ class CustomBackend(BaseBackend):
         if 'access_token' not in data:
             return None
 
+
+        
+
         headers = {
             'User-Agent': 'My User Agent 1.0',
             'accept': 'application/json',
@@ -59,14 +62,17 @@ class CustomBackend(BaseBackend):
         url = settings.AUTH_API_ME_URL
         response = requests.post(url, headers=headers)
 
+        
+        print('response 2: ', response)
+        print("response.content 2", response.content)
+        print("response.status_code 2", response.status_code)
+        
         if response.status_code != http.HTTPStatus.OK:
             return None
 
         data = response.json()
         
-        print('response 2: ', response)
-        print("response.content 2", response.content)
-        print("response.status_code 2", response.status_code)
+        
         print("data 2", data)
 
         try:
