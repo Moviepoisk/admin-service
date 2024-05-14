@@ -27,6 +27,12 @@ RUN chmod +x run.sh
 
 ENV PYTHONPATH=/app
 
+# Создание директории для логов
+RUN mkdir -p /app/logs
+
+# Установка правильных прав доступа
+RUN chmod -R 755 /app/logs
+
 # chown all the files to the app user
 RUN chown -R app:app $HOME
 
