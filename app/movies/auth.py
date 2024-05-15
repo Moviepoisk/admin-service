@@ -37,7 +37,7 @@ class CustomBackend(BaseBackend):
         user_data = user_response.json()
         user = self._create_or_update_user(user_data)
         print('==================')
-        print(user_data.__dict__)
+        print(user_data)
         return user
 
     def _get_auth_response(self, username, password):
@@ -79,16 +79,16 @@ class CustomBackend(BaseBackend):
 
             # Получение или создание пользователя по ID
             user, created = User.objects.get_or_create(id=data["id"])
-            print(f"User {user} created: {created}")
 
-            # Обновление полей пользователя
-            user.email = data["email"]
-            user.username = data["login"]
-            user.first_name = data["first_name"]
-            user.last_name = data["last_name"]
-            user.is_admin = True  # data.get('role') == Roles.ADMIN
-            user.is_active = True  # data.get('is_active')
-            # Сохранение пользователя с обработкой возможных ошибок
+# Обновление полей пользователя, если они не пустые
+            if data["email"]:
+                user.email = data["email"]
+            if data["login"]:
+                user.username = data["login"]
+            if data["first_name"]:
+                user.first_name = data["first_name"]
+            if data["last_name"]:
+                user.last_name = data["last_name"]
 
             print(f"User {user} updated")
 
