@@ -20,7 +20,8 @@ class CustomBackend(BaseBackend):
         auth_response = self._get_auth_response(username, password)
         if not auth_response or auth_response.status_code != http.HTTPStatus.OK:
             return None
-
+        print('==================')
+        print(auth_response.content)
         auth_data = auth_response.json()
         if "access_token" not in auth_data:
             return None
@@ -30,9 +31,13 @@ class CustomBackend(BaseBackend):
         if not user_response or user_response.status_code != http.HTTPStatus.OK:
             return None
 
+        print('++++++++++++++++++++++')
+        print(user_response.content)
+
         user_data = user_response.json()
         user = self._create_or_update_user(user_data)
-
+        print('==================')
+        print(user_data.__dict__)
         return user
 
     def _get_auth_response(self, username, password):
@@ -86,7 +91,7 @@ class CustomBackend(BaseBackend):
             # Сохранение пользователя с обработкой возможных ошибок
 
             print(f"User {user} updated")
-            
+
             user.save()
             return user
 
