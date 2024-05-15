@@ -1,5 +1,4 @@
 import http
-import json
 from enum import StrEnum, auto
 
 import requests
@@ -19,25 +18,22 @@ class CustomBackend(BaseBackend):
         # Авторизация пользователя
         auth_response = self._get_auth_response(username, password)
         if not auth_response or auth_response.status_code != http.HTTPStatus.OK:
+            print("Auth response error or not OK")
             return None
-        print('==================')
-        print(auth_response.content)
+
         auth_data = auth_response.json()
         if "access_token" not in auth_data:
+            print("No access token in auth data")
             return None
 
         # Получение информации о пользователе
         user_response = self._get_user_response(auth_data.get("access_token"))
         if not user_response or user_response.status_code != http.HTTPStatus.OK:
+            print("User response error or not OK")
             return None
-
-        print('++++++++++++++++++++++')
-        print(user_response.content)
 
         user_data = user_response.json()
         user = self._create_or_update_user(user_data)
-        print('==================')
-        print(user_data)
         return user
 
     def _get_auth_response(self, username, password):
@@ -56,6 +52,8 @@ class CustomBackend(BaseBackend):
             "client_secret": "",
         }
         response = requests.post(url, headers=headers, data=data)
+        print("Auth response status:", response.status_code)
+        print("Auth response content:", response.content)
         return response
 
     def _get_user_response(self, access_token):
@@ -67,6 +65,8 @@ class CustomBackend(BaseBackend):
             "Content-Type": "application/x-www-form-urlencoded",
         }
         response = requests.post(url, headers=headers)
+        print("User response status:", response.status_code)
+        print("User response content:", response.content)
         return response
 
     def _create_or_update_user(self, data):
@@ -81,22 +81,20 @@ class CustomBackend(BaseBackend):
             user, created = User.objects.get_or_create(id=data["id"])
 
             # Обновление полей пользователя, если они не пустые
-            if data["email"]:
-                user.email = data["email"]
-            if data["login"]:
-                user.username = data["login"]
-            if data["first_name"]:
-                user.first_name = data["first_name"]
-            if data["last_name"]:
-                user.last_name = data["last_name"]
-
-            print(f"User {user} updated")
+            user.email = data["email"]
+            user.username = data["login"]
+            user.first_name = data["first_name"]
+            user.last_name = data["last_name"]
+            user.is_active = True
+            user.is_admin = True
 
             # Проверка перед сохранением, чтобы избежать нарушения уникальных ограничений
             if User.objects.filter(username=user.username).exclude(id=user.id).exists():
                 raise IntegrityError(f"Username {user.username} already exists.")
 
             user.save()
+            print(f"User {user} created or updated")
+            print(f"User details after save: {user.__dict__}")
             return user
 
         except IntegrityError as e:
