@@ -74,6 +74,7 @@ class CustomBackend(BaseBackend):
 
             # Получение или создание пользователя по ID
             user, created = User.objects.get_or_create(id=data["id"])
+            print(f"User {user} created: {created}")
 
             # Обновление полей пользователя
             user.email = data["email"]
@@ -83,6 +84,9 @@ class CustomBackend(BaseBackend):
             user.is_admin = True  # data.get('role') == Roles.ADMIN
             user.is_active = True  # data.get('is_active')
             # Сохранение пользователя с обработкой возможных ошибок
+
+            print(f"User {user} updated")
+            
             user.save()
             return user
 
