@@ -90,28 +90,3 @@ AUTHENTICATION_BACKENDS = [
 AUTH_API = "http://auth-clusterip:8000"
 AUTH_API_LOGIN_URL = f"{AUTH_API}/api/v1/tokens"
 AUTH_API_ME_URL = f"{AUTH_API}/api/v1/user/me"
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#         'file': {
-#             'class': 'logging.FileHandler',
-#             'filename': '/app/logs/django.log',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['console', 'file'],
-#         'level': 'DEBUG',
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console', 'file'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
