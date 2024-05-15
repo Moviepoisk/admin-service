@@ -74,13 +74,13 @@ class CustomBackend(BaseBackend):
             # Проверка на наличие обязательных полей
             required_fields = ["id", "email", "login", "first_name", "last_name"]
             for field in required_fields:
-                if field not in data:
-                    raise ValueError(f"{field} not provided in data")
+                if field not in data or not data[field]:
+                    raise ValueError(f"{field} not provided or is empty in data")
 
             # Получение или создание пользователя по ID
             user, created = User.objects.get_or_create(id=data["id"])
 
-# Обновление полей пользователя, если они не пустые
+            # Обновление полей пользователя, если они не пустые
             if data["email"]:
                 user.email = data["email"]
             if data["login"]:
@@ -91,6 +91,10 @@ class CustomBackend(BaseBackend):
                 user.last_name = data["last_name"]
 
             print(f"User {user} updated")
+
+            # Проверка перед сохранением, чтобы избежать нарушения уникальных ограничений
+            if User.objects.filter(username=user.username).exclude(id=user.id).exists():
+                raise IntegrityError(f"Username {user.username} already exists.")
 
             user.save()
             return user
@@ -113,4 +117,3 @@ class CustomBackend(BaseBackend):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
