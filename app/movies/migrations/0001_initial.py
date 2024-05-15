@@ -14,6 +14,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Создание схемы content
+        migrations.RunSQL(
+            """
+            CREATE SCHEMA IF NOT EXISTS content;
+            """,
+            reverse_sql="""
+            DROP SCHEMA IF EXISTS content;
+            """
+        ),
         migrations.CreateModel(
             name='Filmwork',
             fields=[
