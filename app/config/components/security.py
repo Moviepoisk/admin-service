@@ -10,12 +10,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False) == "True"
 
-# ALLOWED_HOSTS = [
-#     '0.0.0.0',
-#     '127.0.0.1',
-#     'localhost,
-#     'https://admin.moviepoisk.ru']
-
 ALLOWED_HOSTS = [i for i in os.environ.get("ALLOWED_HOSTS").split(" ")]
 
 # Password validation
