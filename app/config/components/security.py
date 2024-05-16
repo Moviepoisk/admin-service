@@ -11,6 +11,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
 DEBUG = os.environ.get("DEBUG", False) == "True"
 
 ALLOWED_HOSTS = [i for i in os.environ.get("ALLOWED_HOSTS").split(" ")]
+CSRF_TRUSTED_ORIGINS = [i for i in os.environ.get("ALLOWED_HOSTS").split(" ")]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
